@@ -22,15 +22,23 @@ namespace Post.WebApplication.Controllers
         // GET: PostController/Details/5
         public ActionResult Details(int id)
         {
+            var post = PostRepository.SelecionarPorId(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
             return View();
         }
 
         // GET: PostController/Create
         public ActionResult Create()
         {
-            
+            var post = new Posts();
 
-            return View();
+
+
+            return View(post);
         }
 
         // POST: PostController/Create
@@ -54,16 +62,25 @@ namespace Post.WebApplication.Controllers
         // GET: PostController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var post = PostRepository.SelecionarPorId(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
         }
 
         // POST: PostController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Posts post)
         {
             try
             {
+                PostRepository.Editar(id, post);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -75,16 +92,24 @@ namespace Post.WebApplication.Controllers
         // GET: PostController/Delete/5
         public ActionResult Delete(int id)
         {
+            var post = PostRepository.SelecionarPorId(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
             return View();
         }
 
         // POST: PostController/Delete/5
         [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
+                PostRepository.Excluir(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
