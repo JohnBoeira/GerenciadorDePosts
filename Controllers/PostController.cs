@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Post.WebApplication.Data;
+using Post.WebApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,10 +36,13 @@ namespace Post.WebApplication.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Posts post)
         {
             try
             {
+
+                PostRepository.Adicionar(post);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
