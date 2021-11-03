@@ -28,15 +28,13 @@ namespace Post.WebApplication.Controllers
             {
                 return NotFound();
             }
-            return View();
+            return View(post);
         }
 
         // GET: PostController/Create
         public ActionResult Create()
         {
             var post = new Posts();
-
-
 
             return View(post);
         }
